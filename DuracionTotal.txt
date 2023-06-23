@@ -1,0 +1,2 @@
+La duracion total de las tareas pendientes es: 
+149

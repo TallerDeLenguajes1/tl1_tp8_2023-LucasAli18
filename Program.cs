@@ -1,19 +1,42 @@
 using Tareas;
-using Empleados;
+using System;
+using System.IO;
 
+        string rutaArchivo = "DuracionTotal.txt";
 
         Random aleatorio = new Random();
         int canEmpleados = aleatorio.Next(1, 4);
         List<Tarea> TareasPendientes = new List<Tarea>();
         List<Tarea> TareasRealizadas = new List<Tarea>();
-        List<Empleado> Empleadores = new List<Empleado>();
         int opcion;
+        int sumador=0;
         string? buscador;
-        int canTareas = aleatorio.Next(1, 4);
-        for (int i = 0; i < 3; i++)
+        int canTareas = aleatorio.Next(1, 6);
+
+        for (int i = 0; i < canTareas; i++)
         {
             Tarea nueva = new Tarea();
             TareasPendientes.Add(nueva.CrearTarea(i+1));
+        }
+        foreach (var tarea in TareasPendientes)
+        {
+            sumador = tarea.Duracion + sumador;
+        }
+        try
+        {
+            // Abrir el archivo en modo de escritura
+            using (StreamWriter archivo = new StreamWriter(rutaArchivo))
+            {
+                // Escribir los datos en el archivo
+                archivo.WriteLine("La duracion total de las tareas pendientes es: ");
+                archivo.WriteLine(+sumador);
+            }
+
+            Console.WriteLine("Los datos se han guardado correctamente en el archivo.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Se produjo un error al guardar los datos en el archivo: " + ex.Message);
         }
         Console.WriteLine("==================MENU========================");
         Console.WriteLine("1.Ver Tareas Pendientes");
